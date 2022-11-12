@@ -21,14 +21,12 @@ VALUES ("Will", "Smith", 1, null),
 ("James", "King", 2, 1), 
 ("Judy", "Thomas", 3, null),
  ("Mike", "Fred", 4, 4), 
- ("April", "Aitiken", 2, 1), 
+ ("April", "Aitken", 2, 1), 
  ("Gabe", "Radi", 6, 7), 
  ("Yumi", "Yam", 3, null),
   ("Harvey", "Steve", 5, null); 
 
 
-NSERT INTO managers(manager)
-VALUES("Will Smith"), ("Judy Thomas"), ("Harvey Steve");
 
 
 SELECT * FROM employee;
