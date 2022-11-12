@@ -23,23 +23,46 @@ function menu() {
             type:"list",
             message:"what you would like to do?",
             name:"option",
-            choices:["view employee", "view all roles", "view all departments", "add a department", "add a role", "update an employee role", "add employee", "exit"]
+            choices:["view employees", "view all roles", "view all departments", "add a department", "add a role", "update an employee role", "add employee", "exit"]
         }
     )
     .then(function(info) {
         console.log(info)
-        if(info.option==="view employee"){
-            // employee function goes here
-
-
+        if(info.option==="view employees"){
         }
+    })   
+        // employee function goes here
+            function viewEmployees() {
+                const request = "SELECT * FROM employees";
+                db.query(request, function(err, res) {
+                  if (err) throw err;
+                  console.log("Viewing All Employees");
+                  console.table(res);
+                }
+
+       
         if(info.option==="view all roles"){
             // all roles function goes here
-            
+            function viewRoles() {
+                let request = "SELECT * FROM roles";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("Viewing All Roles");
+                    console.table(res);
+             
+                })
         }
+    }
 
         if(info.option==="view all departments"){
             //all departments function goes here
+            function viewDepartments() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("Viewing All Departments");
+                    console.table(res);
+                })
         }
 
         if(info.option==="add a department"){
@@ -57,7 +80,7 @@ function menu() {
         if(info.option==="add employee"){
             //add employee function goes here
         }
-
+    
     })
 }
 // function to insert employees into an array after retrieving them from the database
