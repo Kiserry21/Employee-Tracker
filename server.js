@@ -10,7 +10,7 @@ var departments = [];
 var employees = [];
 
 // connection to mysql database
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
@@ -32,11 +32,30 @@ function menu() {
             viewEmployees()
         
         }
-        if(info.option===)
+        if(info.option==="view all roles"){
+            viewRoles()
+        }
+        if(info.option==="view all departments"){
+            viewDepartments()
+        }
+        if(info.option==="add a department"){
+            addDepartment()
+        }
+        if(info.option==="add a role"){
+            addRole()
+        }
+        if(info.option==="update an employee role"){
+            updateAnEmployeeRole()
+        }
+        if(info.option==="add employee"){
+            addEmployee()
+        }
+
+        
     }) 
 }  
         // employee function goes here
-            function viewEmployees() 
+            function viewEmployees(){ 
                 const request = "SELECT * FROM employees";
                 db.query(request, function(err, res) {
                   if (err) throw err;
@@ -44,6 +63,7 @@ function menu() {
                   console.table(res);
                 
                 })
+            }
 
        
        
@@ -72,17 +92,49 @@ function menu() {
 
         
             //add a department function goes here
+            function addDepartment() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("add a department");
+                    console.table(res);
+                })
+        }
         
        
             //add a role function goes here
+            function addRole() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("add a role");
+                    console.table(res);
+                })
+        }
         
 
         
             //update an employee role function goes here
+            function updateAnEmployeeRole() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("update an employee role");
+                    console.table(res);
+                })
+        }
        
 
         
             //add employee function goes here
+            function addEmployee() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("add employee");
+                    console.table(res);
+                })
+        }
   
 
 // function to insert employees into an array after retrieving them from the database
