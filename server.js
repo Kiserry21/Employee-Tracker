@@ -16,7 +16,8 @@ const db = mysql.createConnection({
   user: "root",
   password: "",
   database: "employeesDB",
-});
+},
+console.log("employeesDB"));
 function menu() {
     return inquirer.prompt(
         {
@@ -56,11 +57,12 @@ function menu() {
 }  
         // employee function goes here
             function viewEmployees(){ 
-                const request = "SELECT * FROM employees";
+                const request = "SELECT * FROM employee";
                 db.query(request, function(err, res) {
                   if (err) throw err;
                   console.log("Viewing All Employees");
                   console.table(res);
+                   menu()
                 
                 })
             }
@@ -69,11 +71,12 @@ function menu() {
        
             // all roles function goes here
             function viewRoles() {
-                let request = "SELECT * FROM roles";
+                let request = "SELECT * FROM role";
                 db.query(request, function(err, res) {
                     if (err) throw err;
                     console.log("Viewing All Roles");
                     console.table(res);
+                    menu()
              
                 })
         }
@@ -87,6 +90,7 @@ function menu() {
                     if (err) throw err;
                     console.log("Viewing All Departments");
                     console.table(res);
+                    menu()
                 })
         }
 
@@ -98,6 +102,7 @@ function menu() {
                     if (err) throw err;
                     console.log("add a department");
                     console.table(res);
+                    menu()
                 })
         }
         
@@ -109,6 +114,7 @@ function menu() {
                     if (err) throw err;
                     console.log("add a role");
                     console.table(res);
+                    menu()
                 })
         }
         
@@ -121,6 +127,7 @@ function menu() {
                     if (err) throw err;
                     console.log("update an employee role");
                     console.table(res);
+                    menu()
                 })
         }
        
@@ -133,6 +140,7 @@ function menu() {
                     if (err) throw err;
                     console.log("add employee");
                     console.table(res);
+                    menu()
                 })
         }
   
