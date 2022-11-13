@@ -52,8 +52,7 @@ function menu() {
             addEmployee()
         }
 
-        
-    }) 
+        }) 
 }  
         // employee function goes here
             function viewEmployees(){ 
@@ -67,9 +66,7 @@ function menu() {
                 })
             }
 
-       
-       
-            // all roles function goes here
+       // all roles function goes here
             function viewRoles() {
                 let request = "SELECT * FROM role";
                 db.query(request, function(err, res) {
@@ -81,9 +78,7 @@ function menu() {
                 })
         }
    
-
-        
-            //all departments function goes here
+        //all departments function goes here
             function viewDepartments() {
                 const request = "SELECT * FROM department";
                 db.query(request, function(err, res) {
@@ -94,8 +89,7 @@ function menu() {
                 })
         }
 
-        
-            //add a department function goes here
+        //add a department function goes here
             function addDepartment() {
                 const request = "SELECT * FROM department";
                 db.query(request, function(err, res) {
@@ -106,8 +100,7 @@ function menu() {
                 })
         }
         
-       
-            //add a role function goes here
+        //add a role function goes here
             function addRole() {
                 const request = "SELECT * FROM department";
                 db.query(request, function(err, res) {
@@ -118,9 +111,7 @@ function menu() {
                 })
         }
         
-
-        
-            //update an employee role function goes here
+      //update an employee role function goes here
             function updateAnEmployeeRole() {
                 const request = "SELECT * FROM department";
                 db.query(request, function(err, res) {
@@ -131,9 +122,7 @@ function menu() {
                 })
         }
        
-
-        
-            //add employee function goes here
+        //add employee function goes here
             function addEmployee() {
                 const request = "SELECT * FROM department";
                 db.query(request, function(err, res) {
@@ -144,15 +133,62 @@ function menu() {
                 })
         }
   
+        function newEmployee() {
+            inquirer.prompt ([
+                {
+                type: 'input',
+                message: 'Enter employee first name.',
+                name: 'FirstName'
+                },
+                {
+                    type: 'input',
+                    message: 'Enter employee last name.',
+                    name: 'LastName'
+                },
+                {
+                    type: 'input',
+                    message: 'Enter employee ID number',
+                    name: 'EmployeeID'
+                },
+                {
+                    type: 'input',
+                    message: 'Enter thier managers ID',
+                    name: 'ManagerID'
+                }
+                
+            ])
+            .then(function (response) {
+                connection.query('INSERT INTO employees(first_name, last_name, roles_id, manager_id) VALUES (?,?,?,?)', 
+                [response.FirstName, response.LastName, response.EmployeeID, response.ManagerID]), function(err,response) {
+                    if (err) throw err;
+                    console.table(res);
+                    inquirer.prompt([
+                        {
+                            type: 'list',
+                            name: 'choice',
+                            message: 'select an option.',
+                            choices: [
+                                'Main Menu',
+                                'Quit'
+                            ]
+                        }
+                    ])
+                   .then((answer) => {
+                       switch (answer.choice){
+                           case 'Main Menu':
+                               start();
+                               break;
+                               case 'Quit':
+                                   Quit();
+                       }
+                   })
+                }
+            })
+        }
+        
+         // viewEmployees();
 
-// function to insert employees into an array after retrieving them from the database
-const getEmployee = () => {
-    connection.query(
-      `SELECT first_name, last_name, id FROM employee`,
-      (err, res) => {
-        if (err) throw err;
-        console.table(res)
-      }
-    );
-  };
-  menu()
+ 
+      
+        
+  
