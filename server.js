@@ -171,7 +171,9 @@ function menu() {
                                 'Main Menu',
                                 'Quit'
                             ]
+                            
                         }
+                      
                     ])
                    .then((answer) => {
                        switch (answer.choice){
@@ -183,11 +185,12 @@ function menu() {
                        }
                    })
                 }
+                
             })
         }
         
          // viewEmployees();
-
+         menu()
  
       
         
