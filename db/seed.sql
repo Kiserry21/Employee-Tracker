@@ -1,6 +1,6 @@
 USE employeesDB;
 
-INSERT INTO department(role)
+INSERT INTO department(name)
 VALUES ("Visual"), 
 ("Marketing"), 
 ("sales"), 
@@ -16,7 +16,7 @@ VALUES ("Lead Engineer", 40000, 1),
  ("Visual Manager", 125000, 4);
 
 
-INSERT INTO employee(first_name, last_name, role_id, manager_id)
+INSERT INTO employees(first_name, last_name, role_id, manager_id)
 VALUES ("Will", "Smith", 1, null), 
 ("James", "King", 2, 1), 
 ("Judy", "Thomas", 3, null),
@@ -30,4 +30,4 @@ VALUES ("Will", "Smith", 1, null),
 
 
 SELECT * FROM employee;
-SELECT * FROM managers;
+
