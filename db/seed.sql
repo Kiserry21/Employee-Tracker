@@ -30,4 +30,3 @@ VALUES ("Will", "Smith", 1, null),
 
 
 SELECT * FROM employee;
-

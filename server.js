@@ -24,7 +24,20 @@ function menu() {
             type:"list",
             message:"what you would like to do?",
             name:"option",
-            choices:["view employees", "view all roles", "view all departments", "add a department", "add a role", "update an employee role", "add employee", "exit"]
+            choices:["view employees", 
+            "view all roles", 
+            "view all departments", 
+            "add a department", 
+            "add a role", 
+            "update an employee role", 
+            "add employee", 
+            "view all employees by manager",
+            "remove departtment",
+            "remove employee",
+            "update employee managers",
+            "view all employees by department",
+            "view budget",
+            "exit"]
         }
     )
     .then(function(info) {
@@ -51,12 +64,33 @@ function menu() {
         if(info.option==="add employee"){
             addEmployee()
         }
+        if(info.option==="view all employees by manager"){
+            addEmployee()
+        }
+        if(info.option==="remove department"){
+            addEmployee()
+        }
+        if(info.option==="remove employee"){
+            addEmployee()
+        }
+        if(info.option==="update employee managers"){
+            addEmployee()
+        }
+        if(info.option==="view all employees by department"){
+            addEmployee()
+        }
+        if(info.option==="view budget"){
+            addEmployee()
+        }
+        
+
+
 
         }) 
 }  
         // employee function goes here
             function viewEmployees(){ 
-                const request = "SELECT * FROM employee";
+                const request = "SELECT employee.*, role.title, role.salary, department.name FROM employee join role on employee.role_id=role.id join department on role.department_id=department.id";
                 db.query(request, function(err, res) {
                   if (err) throw err;
                   console.log("Viewing All Employees");
@@ -128,6 +162,66 @@ function menu() {
                 db.query(request, function(err, res) {
                     if (err) throw err;
                     console.log("add employee");
+                    console.table(res);
+                    menu()
+                })
+        }
+        //view all employees by manager function goes here
+            function viewAllEmployeesByManager() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("View All Employees By Manager");
+                    console.table(res);
+                    menu()
+                })
+        }
+        // remove repartment function goes here
+            function removeDepartment() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("remove department");
+                    console.table(res);
+                    menu()
+                })
+        }
+        // remove employee function goes here
+            function removeEmployee() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("remove employee");
+                    console.table(res);
+                    menu()
+                })
+        }
+        // update employee managers function goes here
+            function updateEmployeeManagers() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("update employee managers");
+                    console.table(res);
+                    menu()
+                })
+        }
+        // view all employees by department function goes here
+            function viewAllEmployeesByDepartment() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("view all employees by department");
+                    console.table(res);
+                    menu()
+                })
+        }
+        // view budget function goes here
+            function viewBudget() {
+                const request = "SELECT * FROM department";
+                db.query(request, function(err, res) {
+                    if (err) throw err;
+                    console.log("view budget");
                     console.table(res);
                     menu()
                 })
