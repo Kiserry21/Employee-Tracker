@@ -22,11 +22,15 @@ VALUES ("Will", "Smith", 1, null),
 ("Judy", "Thomas", 3, null),
  ("Mike", "Fred", 4, 4), 
  ("April", "Aitken", 2, 1), 
- ("Gabe", "Radi", 5, 2), 
+ ("Gabe", "Radi", 5, null), 
  ("Yumi", "Yam", 3, null),
   ("Harvey", "Steve", 5, null); 
+
+  INSERT INTO managers(manager)
+VALUES("James King"), ("Mike Fred"), ("April Aitken");
 
 
 
 
 SELECT * FROM employee;
+SELECT * FROM managers;

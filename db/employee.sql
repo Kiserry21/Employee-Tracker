@@ -36,4 +36,10 @@ foreign key(role_id) references role(id),
 foreign key(manager_id) references employee(id)
 );
 
+CREATE TABLE managers (
+manager_id INT AUTO_INCREMENT,
+manager VARCHAR(25),
+PRIMARY KEY (manager_id)
+);
+
 
