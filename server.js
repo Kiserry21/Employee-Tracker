@@ -133,7 +133,7 @@ function menu() {
                 message: "What department would you like to add?"
               })
               .then((answer) => {
-                connection.query(`INSERT INTO department(role)
+                db.query(`INSERT INTO department(name)
                 VALUES("${answer.department}")`, (err, res) => {
                   if (err) throw err;
                   menu()
@@ -163,7 +163,7 @@ function menu() {
               }
               ])
               .then((answer) => {
-                connection.query(`INSERT INTO role(title, salary, department_id)
+                db.query(`INSERT INTO role(title, salary, department_id)
                 VALUES("${answer.role}", ${answer.salary}, ${answer.department})`, (err, res) => {
                   if (err) throw err;
                   menu()
@@ -345,7 +345,7 @@ function menu() {
         }
         // view budget function goes here
         const viewBudget = () => {
-            connection.query(`SELECT salary 
+            db.query(`SELECT salary 
             FROM employee
             JOIN role ON employee.role_id = role.role_id 
             JOIN department ON role.department_id = department.department_id
