@@ -143,6 +143,13 @@ function menu() {
         
         //add a role function goes here
         const addRole = () => {
+          db.query("SELECT * FROM department",(err,res)=>{
+            let departments=res.map((department)=>({
+              name:department.name,
+              value:department.id
+            }))
+
+          
             inquirer
               .prompt([
                 {
@@ -169,10 +176,24 @@ function menu() {
                   menu()
                 })
               })
+            })
           };
         
       //update an employee role function goes here
       const updateEmployeeRole = () => {
+        db.query("SELECT * FROM employee",(err,res)=>{
+         if(err)throw err
+         let employees=res.map((employee)=>({
+          name:employee.first_name + " " + employee.last_name,
+          value:employee.id
+         }))
+       db.query("SELECT * FROM role",(err,res)=>{
+        if(err)throw err
+        let roles=res.map((role)=>({
+          name:role.title,
+          value:role.id
+        }))
+      
         inquirer
           .prompt([
             {
@@ -189,7 +210,7 @@ function menu() {
             },
           ])
           .then((answer) => {
-            connection.query(
+            db.query(
               `UPDATE employee
         SET role_id = ${answer.role}
         WHERE id = ${answer.employee};`,
@@ -199,11 +220,25 @@ function menu() {
               }
             );
           });
+        })
+        })
       };
        
         //add employee function goes here
-        function newEmployee() {
+        function addEmployee() {
             console.log('oy')
+            db.query("SELECT * FROM role",(err,res)=>{
+              if(err)throw err
+              let roles=res.map((role)=>({
+                name:role.title,
+                value:role.id
+              }))
+              db.query("SELECT * FROM employee",(err,res)=>{
+                if(err)throw err
+                let employees=res.map((employee)=>({
+                 name:employee.first_name + " " + employee.last_name,
+                 value:employee.id
+                }))
             inquirer.prompt ([
                 {
                 type: 'input',
@@ -216,29 +251,33 @@ function menu() {
                     name: 'LastName'
                 },
                 {
-                    type: 'input',
-                    message: 'Enter employee ID number',
-                    name: 'EmployeeID'
+                  type: "list",
+                  name: "role",
+                  message: "What is his new role?",
+                  choices: roles,
                 },
+              
                 {
-                    type: 'input',
-                    message: 'Enter thier managers ID',
-                    name: 'ManagerID'
-                }
+                  type: "list",
+                  name: "ManagerID",
+                  message: "Whose is the manager of the employee?",
+                  choices: employees,
+                },
                 
             ])
             .then(function (response) {
-                connection.query('INSERT INTO employees(first_name, last_name, roles_id, manager_id) VALUES (?,?,?,?)', 
-                [response.FirstName, response.LastName, response.EmployeeID, response.ManagerID]), function(err,response) {
+                db.query('INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)', 
+                [response.FirstName, response.LastName, response.role, response.ManagerID], (err,response)=> {
                     if (err) throw err;
-                    console.table(res);
-                    inquirer.prompt
+                  
+                   
                         menu()
                             
-                        }
-                   
+                        })
+                      })
+                    })
                 })
-                           
+              }              
         //view all employees by manager function goes here
         const allEmployeeManagers = () => {
             inquirer
@@ -249,7 +288,7 @@ function menu() {
                 choices: managers,
               })
               .then((answer) => {
-                connection.query(
+                db.query(
                   `SELECT first_name, last_name FROM employee
                 WHERE manager_id = ${answer.manager};`,
                   (err, res) => {
@@ -267,11 +306,11 @@ function menu() {
               .prompt({
                 type: "list",
                 name: "department",
-                message: "Who would you like to remove?",
+                message: "Which department would you like to remove?",
                 choices: departments,
               })
               .then((answer) => {
-                connection.query(
+                db.query(
                   `DELETE FROM department WHERE id=${answer.department}`,
                   (err, res) => {
                     if (err) throw err;
@@ -335,20 +374,20 @@ function menu() {
         }
         // view all employees by department function goes here
             //function viewAllEmployeeByDepartment() {
-                const request = "SELECT * FROM department";
-                db.query(request, function(err, res) {
-                    if (err) throw err;
-                    console.log("view all employees by department");
-                    console.table(res);
-                    menu()
-                })
-        }
+              //   const request = "SELECT * FROM department";
+              //   db.query(request, function(err, res) {
+              //       if (err) throw err;
+              //       console.log("view all employees by department");
+              //       console.table(res);
+              //       menu()
+              //   })
+              // }
         // view budget function goes here
         const viewBudget = () => {
             db.query(`SELECT salary 
             FROM employee
-            JOIN role ON employee.role_id = role.role_id 
-            JOIN department ON role.department_id = department.department_id
+            JOIN role ON employee.role_id = role.id 
+            JOIN department ON role.department_id = department.id
             LEFT JOIN managers on employee.manager_id = managers.manager_id`, (err, res) => {
               if (err) throw err;
               console.log(res);
