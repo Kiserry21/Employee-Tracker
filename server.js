@@ -59,7 +59,7 @@ function menu() {
             addRole()
         }
         if(info.option==="update an employee role"){
-            updateAnEmployeeRole()
+            updateEmployeeRole()
         }
         if(info.option==="add employee"){
             addEmployee()
@@ -86,10 +86,7 @@ function menu() {
            viewBudget()
         }
         
-
-
-
-        }) 
+    }) 
 }  
         // employee function goes here
             function viewEmployees(){ 
@@ -176,7 +173,7 @@ function menu() {
           };
         
       //update an employee role function goes here
-      const updateRole = () => {
+      const updateEmployeeRole = () => {
         inquirer
           .prompt([
             {
@@ -382,4 +379,4 @@ function menu() {
         }
       
         
-  
+  menu()
