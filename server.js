@@ -34,6 +34,7 @@ function menu() {
             "view all employee by manager",
             "remove department",
             "remove employee",
+            "remove role",
             "update employee managers",
             "view all employee by department",
             "view budget",
@@ -135,7 +136,6 @@ function menu() {
                 connection.query(`INSERT INTO department(role)
                 VALUES("${answer.department}")`, (err, res) => {
                   if (err) throw err;
-                  init();
                   menu()
                 })
               })
@@ -166,7 +166,6 @@ function menu() {
                 connection.query(`INSERT INTO role(title, salary, department_id)
                 VALUES("${answer.role}", ${answer.salary}, ${answer.department})`, (err, res) => {
                   if (err) throw err;
-                  init();
                   menu()
                 })
               })
@@ -196,7 +195,6 @@ function menu() {
         WHERE id = ${answer.employee};`,
               (err, res) => {
                 if (err) throw err;
-                init();
                 menu()
               }
             );
@@ -257,7 +255,6 @@ function menu() {
                   (err, res) => {
                     if (err) throw err;
                     console.table(res);
-                    init();
                     menu()
                   }
                 );
@@ -278,11 +275,11 @@ function menu() {
                   `DELETE FROM department WHERE id=${answer.department}`,
                   (err, res) => {
                     if (err) throw err;
-                    init();
+                    menu()
                   }
                 );
                 console.log(answer);
-                menu()
+                
               });
           };
         // remove employee function goes here
@@ -299,11 +296,11 @@ function menu() {
                   `DELETE FROM employee WHERE id=${answer.employee}`,
                   (err, res) => {
                     if (err) throw err;
-                    init();
+                    menu()
                   }
                 );
                 console.log(answer);
-                menu()
+                
               });
           };
         const removeRole = () => {
@@ -319,11 +316,11 @@ function menu() {
                   `DELETE FROM roles WHERE id=${answer.role}`,
                   (err, res) => {
                     if (err) throw err;
-                    init();
+                    menu()
                   }
                 );
                 console.log(answer);
-                menu()
+             
               });
           };
         // update employee managers function goes here
@@ -365,7 +362,7 @@ function menu() {
               }, 0);
               console.log("TOTAL BUDGET")
               console.log(sum)
-              init();
+              menu()
               
             })
           }
