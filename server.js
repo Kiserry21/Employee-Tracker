@@ -322,7 +322,7 @@ const removeDepartment = () => {
     })
     .then((answer) => {
       db.query(
-        `DELETE FROM department WHERE id=${answer.department}`,
+        `DELETE FROM department WHERE department_id=${answer.department}`,
         (err, res) => {
           if (err) throw err;
           menu();
@@ -357,15 +357,19 @@ const removeEmployee = () => {
   });
 };
 const removeRole = () => {
-  const request =
-  "SELECT CONCAT(role, id as value from role"; 
-db.query(request, function (err, res) {
+db.query("SELECT * FROM role", (err,res)=>{
+  if(err) throw err;
+  let role = res.map((role)=>({
+    name: role.title,
+    value: role,
+  }));
+
   inquirer
     .prompt({
       type: "list",
       name: "role",
       message: "what role would you like to remove?",
-      choices: res,
+      choices: role,
     })
     .then((answer) => {
       db.query(`DELETE FROM roles WHERE id=${answer.role}`, (err, res) => {
