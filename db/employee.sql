@@ -21,7 +21,7 @@ id INT AUTO_INCREMENT PRIMARY KEy,
 title VARCHAR(25),
 salary DECIMAL(10.3),
 department_id INT,
-foreign key(department_id) references department(id)
+foreign key(department_id) references department(id) on delete cascade
 );
 
 
@@ -32,8 +32,8 @@ first_name VARCHAR(25),
 last_name VARCHAR(25),
 role_id INT NULL,
 manager_id INT NULL, 
-foreign key(role_id) references role(id),
-foreign key(manager_id) references employee(id)
+foreign key(role_id) references role(id) on delete cascade
+foreign key(manager_id) references employee(id) on delete cascade
 );
 
 CREATE TABLE managers (
