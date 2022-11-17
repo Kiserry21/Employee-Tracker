@@ -313,6 +313,9 @@ const allEmployeeManagers = () => {
 
 // remove department function goes here
 const removeDepartment = () => {
+  const request = "SELECT * FROM department";
+  db.query(request, function (err, res) {
+    if (err) throw err;
   inquirer
     .prompt({
       type: "list",
@@ -329,6 +332,7 @@ const removeDepartment = () => {
         }
       );
       console.log(answer);
+    })
     });
 };
 // remove employee function goes here
@@ -361,7 +365,7 @@ db.query("SELECT * FROM role", (err,res)=>{
   if(err) throw err;
   let role = res.map((role)=>({
     name: role.title,
-    value: role,
+    value: role.id,
   }));
 
   inquirer
@@ -372,7 +376,7 @@ db.query("SELECT * FROM role", (err,res)=>{
       choices: role,
     })
     .then((answer) => {
-      db.query(`DELETE FROM roles WHERE id=${answer.role}`, (err, res) => {
+      db.query(`DELETE FROM role WHERE id=${answer.role}`, (err, res) => {
         if (err) throw err;
         
         menu();
