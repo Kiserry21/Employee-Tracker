@@ -8,7 +8,9 @@ This is a straightforward application that creates an employee database in MySQL
 1. Clone repository to your local system
 2. Open in VS code
 3. run a npm install in server.js integrated terminal
+
 4.Copy DB files and paste them in your mySQL to create database and pre-populate it
+
 5.run npm start in server.js integrated terminal
 
 # Usage
