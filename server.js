@@ -34,12 +34,12 @@ function menu() {
         "add a role",
         "update an employee role",
         "add employee",
-        "view all employee by manager",
-        "remove department",
+        //"view all employee by manager",
+       // "remove department",
         "remove employee",
         "remove role",
-        "update employee managers",
-        "view all employee by department",
+       // "update employee managers",
+       // "view all employee by department",
         "view budget",
         "exit",
       ],
@@ -67,24 +67,26 @@ function menu() {
       if (info.option === "add employee") {
         addEmployee();
       }
-      if (info.option === "view all employee by manager") {
-        viewEmployeeManager();
-      }
-      if (info.option === "remove department") {
-        removeDepartment();
-      }
+     // if (info.option === "view all employee by manager") {
+      //  viewEmployeeManager();
+     // }
+      //if (info.option === "remove department") {
+      //  removeDepartment();
+     // }
       if (info.option === "remove employee") {
         removeEmployee();
       }
       if (info.option === "remove role") {
         removeRole();
       }
-      if (info.option === "update employee managers") {
-        updateEmployeeManagers();
-      }
-      if (info.option === "view all employee by department") {
-        viewEmployeeDepartment();
-      }
+      //if (info.option === "update employee managers") {
+      //  updateEmployeeManagers();
+     // }
+     
+     // if (info.option === "view all employee by department") {
+        //viewEmployeeDepartment();
+     // }
+     
       if (info.option === "view budget") {
         viewBudget();
       }
@@ -93,8 +95,28 @@ function menu() {
 // employee function goes here
 function viewEmployees() {
   const request =
-    "SELECT employee.*, role.title, role.salary, department.name FROM employee join role on employee.role_id=role.id join department on role.department_id=department.id";
-  db.query(request, function (err, res) {
+  `SELECT 
+       e.id, 
+       e.first_name, 
+       e.last_name,
+      
+       r.title,
+       r.salary,
+       d.name,
+       
+       CONCAT(e2.first_name, " " ,e2.last_name) AS "manager name"
+                              
+       FROM employee AS e
+
+       LEFT JOIN role AS r
+       ON e.role_id = r.id
+
+       LEFT JOIN department AS d
+       ON r.department_id = d.id
+
+       LEFT JOIN employee AS e2 
+       ON e.manager_id = e2.id`
+     db.query(request, function (err, res) {
     if (err) throw err;
     console.log("Viewing All Employees");
     console.table(res);
@@ -290,51 +312,51 @@ function addEmployee() {
   });
 }
 //view all employees by manager function goes here
-const allEmployeeManagers = () => {
-  inquirer
-    .prompt({
-      type: "list",
-      name: "manager",
-      message: "choose a manager?",
-      choices: managers,
-    })
-    .then((answer) => {
-      db.query(
-        `SELECT first_name, last_name FROM employee
-                WHERE manager_id = ${answer.manager};`,
-        (err, res) => {
-          if (err) throw err;
-          console.table(res);
-          menu();
-        }
-      );
-    });
-};
+// const allEmployeeManagers = () => {
+//   inquirer
+//     .prompt({
+//       type: "list",
+//       name: "manager",
+//       message: "choose a manager?",
+//       choices: managers,
+//     })
+//     .then((answer) => {
+//       db.query(
+//         `SELECT first_name, last_name FROM employee
+//                 WHERE manager_id = ${answer.manager};`,
+//         (err, res) => {
+//           if (err) throw err;
+//           console.table(res);
+//           menu();
+//         }
+//       );
+//     });
+// };
 
 // remove department function goes here
-const removeDepartment = () => {
-  const request = "SELECT * FROM department";
-  db.query(request, function (err, res) {
-    if (err) throw err;
-  inquirer
-    .prompt({
-      type: "list",
-      name: "department",
-      message: "Which department would you like to remove?",
-      choices: departments,
-    })
-    .then((answer) => {
-      db.query(
-        `DELETE FROM department WHERE department_id=${answer.department}`,
-        (err, res) => {
-          if (err) throw err;
-          menu();
-        }
-      );
-      console.log(answer);
-    })
-    });
-};
+// const removeDepartment = () => {
+//   const request = "SELECT * FROM department";
+//   db.query(request, function (err, res) {
+//     if (err) throw err;
+//   inquirer
+//     .prompt({
+//       type: "list",
+//       name: "department",
+//       message: "Which department would you like to remove?",
+//       choices: departments,
+//     })
+//     .then((answer) => {
+//       db.query(
+//         `DELETE FROM department WHERE department_id=${answer.department}`,
+//         (err, res) => {
+//           if (err) throw err;
+//           menu();
+//         }
+//       );
+//       console.log(answer);
+//     })
+//     });
+// };
 // remove employee function goes here
 const removeEmployee = () => {
   const request =
@@ -386,15 +408,15 @@ db.query("SELECT * FROM role", (err,res)=>{
   })
 };
 // update employee managers function goes here
-function updateEmployeeManagers() {
-  const request = "SELECT * FROM department";
-  db.query(request, function (err, res) {
-    if (err) throw err;
-    console.log("update employee managers");
-    console.table(res);
-    menu();
-  });
-}
+// function updateEmployeeManagers() {
+//   const request = "SELECT * FROM department";
+//   db.query(request, function (err, res) {
+//     if (err) throw err;
+//     console.log("update employee managers");
+//     console.table(res);
+//     menu();
+//   });
+// }
 // view all employees by department function goes here
 //function viewAllEmployeeByDepartment() {
 //   const request = "SELECT * FROM department";
@@ -431,9 +453,5 @@ const viewBudget = () => {
   );
 };
 
-function Quit() {
-  console.log("Goodbye!");
-  process.exit();
-}
 
 menu();
